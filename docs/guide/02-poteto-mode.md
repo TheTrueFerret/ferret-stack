@@ -90,11 +90,11 @@ continue
 keep going until done
 ```
 
-Short works because the playbook holds the structure, and a Custom Mode keeps `/poteto-mode` in context on every turn. [Set up pstack](./01-setup.md#run-your-first-task) shows how to start one. Your words carry the intent, and the skill carries the rigor.
+Short works because the playbook holds the structure, and the skill stays in the thread's context between turns. [Set up pstack](./01-setup.md#run-your-first-task) shows how to make it the default in every session. Your words carry the intent, and the skill carries the rigor.
 
 ## Switch tasks with "new task"
 
-A long chat accumulates context from the last task. When you change subjects, say so:
+A long thread accumulates context from the last task. When you change subjects, say so:
 
 ```text
 /poteto-mode new task. figure out why the cache entry survives logout. don't change any code yet.
@@ -102,11 +102,11 @@ A long chat accumulates context from the last task. When you change subjects, sa
 
 "new task" tells `/poteto-mode` to re-match rather than continue the prior playbook. "don't change any code yet" pins this one to Investigation. Without those two phrases, a mode mid-Feature tends to treat your question as the next feature step.
 
-## Give parallel work its own machine
+## Give parallel work its own worktree
 
-If you run several agents against one repository on one computer, they will fight over the working tree, the ports, and the build output. The cleanest isolation is a [cloud subagent](https://cursor.com/docs/subagents#cloud-subagents). Each one gets its own VM and branch, so it can install dependencies, run your app, and record video of the result without touching your machine. Type `/in-cloud` before the task, or ask the parent chat to hand work to cloud subagents.
+If you run several agents against one repository on one computer, they will fight over the working tree and the build output. The cleanest isolation is a git worktree per agent. When the lead starts a helper with `delegate_task` and `isolation: "worktree"`, T3 gives it its own checkout and branch under `~/.t3/worktrees/<project>/`. The helper can install dependencies, run your app, and record the result without touching your checkout. It commits on its own branch and reports the path, branch, and commit, so you can read its work with a plain `git diff`.
 
-When the work has to stay local, ask for a worktree up front:
+You can also ask for a worktree up front:
 
 ```text
 /poteto-mode new task. branch off <base> in a fresh worktree, then port the parser change there.
@@ -120,7 +120,7 @@ Worktrees accumulate. When disk gets tight, ask:
 /poteto-mode what's eating my disk? prune the worktrees that are safe to prune.
 ```
 
-The [Worktree cleanup playbook](../../skills/poteto-mode/playbooks/worktree-cleanup.md) classifies every worktree by merge state, uncommitted work, and which chats still touch it. It deletes only what that evidence clears and pauses for your call on anything holding uncommitted work.
+The [Worktree cleanup playbook](../../skills/poteto-mode/playbooks/worktree-cleanup.md) classifies every worktree by merge state, uncommitted work, and which threads still touch it. It deletes only what that evidence clears and pauses for your call on anything holding uncommitted work.
 
 ## Leave it running
 

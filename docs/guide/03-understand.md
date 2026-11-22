@@ -22,7 +22,7 @@ When the cause is unclear, ask for findings, not a fix:
 /how do we dedupe notifications? is there an n+1 when we look up subscribers?
 ```
 
-Ask the question you actually have. [`/how`](../../skills/how/SKILL.md) reads the code and answers at the level of a senior engineer onboarding you onto the subsystem, with the runtime flow, the key types, and the non-obvious parts. It starts one read-only subagent that explores the code and writes the explanation.
+Ask the question you actually have. [`/how`](../../skills/how/SKILL.md) reads the code and answers at the level of a senior engineer onboarding you onto the subsystem, with the runtime flow, the key types, and the non-obvious parts. It starts one read-only helper that explores the code and writes the explanation.
 
 ## Dig up history with `/why`
 
@@ -56,13 +56,13 @@ Teaching helps the agent as much as you. An agent that has to explain its work m
 /recall catch me up on the export work from last week
 ```
 
-[`/recall`](../../skills/recall/SKILL.md) mines your own recent chats plus the shared record (issues, prior fixes, errors still firing) and hands back a brief on where things stand and what's next. Your old chats hold context that a fresh agent lacks, so start new work on an old topic by loading it first, then hand over the new input:
+[`/recall`](../../skills/recall/SKILL.md) mines your own recent T3 threads plus the shared record (issues, prior fixes, errors still firing) and hands back a brief on where things stand and what's next. Your old threads hold context that a fresh agent lacks, so start new work on an old topic by loading it first, then hand over the new input:
 
 ```text
 /recall my work on the virtualized list from yesterday, then read this bug report.
 ```
 
-If you want to resume one specific chat, that's the Session pickup playbook below, not `/recall`.
+If you want to resume one specific thread, that's the Session pickup playbook below, not `/recall`.
 
 ## Take over prior work with Session pickup
 

@@ -55,23 +55,28 @@ else
 	stat_fmt=(-f '%m %N'); fmt_day() { date -r "$1" '+%Y-%m-%d'; }
 fi
 
-# PR state by branch, fetched once as [{number, state, head}] with a lowercase
-# state. Origin when its CLI can read this repo's PRs, otherwise gh. Empty when
-# neither can.
+# PR state by branch, fetched once with gh as [{number, state, head}] with a
+# lowercase state. Empty when gh cannot read this repo's PRs.
 prs=$(mktemp)
-if command -v origin >/dev/null 2>&1 \
-	&& raw=$(origin pr list --author "@me" --state all --limit 1000 \
-		--json number,status,headRef 2>/dev/null); then
-	printf '%s' "$raw" | jq '[.[] | {number, state: .status, head: .headRef}]' > "$prs" 2>/dev/null
-elif raw=$(gh pr list --author "@me" --state all --limit 1000 \
+if raw=$(gh pr list --author "@me" --state all --limit 1000 \
 	--json number,state,headRefName 2>/dev/null); then
 	printf '%s' "$raw" | jq '[.[] | {number, state: (.state | ascii_downcase), head: .headRefName}]' > "$prs" 2>/dev/null
 fi
 [ -s "$prs" ] || echo "[]" > "$prs"
 
-# Transcripts dir: ~/.cursor/projects/<slugified-repo-path>/agent-transcripts.
-slug=$(printf '%s' "$main_wt" | sed 's#^/##; s#/#-#g')
-transcripts="$HOME/.cursor/projects/$slug/agent-transcripts"
+# Chat transcripts: Claude Code keeps one folder per working directory under
+# ~/.claude/projects, and Codex keeps every session under ~/.codex/sessions.
+# T3 runs a worktree's chats with the worktree as their working directory, and
+# a chat elsewhere can still touch it, so search all of them for its path.
+transcripts=()
+for d in "$HOME/.claude/projects" "$HOME/.codex/sessions"; do
+	[ -d "$d" ] && transcripts+=("$d")
+done
+if command -v rg >/dev/null 2>&1; then
+	find_chats() { rg -l -F --glob '*.jsonl' -e "$1/" -e "$1\"" "${transcripts[@]}" 2>/dev/null; }
+else
+	find_chats() { grep -rlF --include='*.jsonl' -e "$1/" -e "$1\"" "${transcripts[@]}" 2>/dev/null; }
+fi
 now=$(date +%s)
 
 echo "# base: $base"
@@ -111,9 +116,9 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
 	# Most recent chat whose transcript operated in this worktree. Match path
 	# followed by "/" or a quote so glint-482 does not match glint-482-r37.
 	last="-"; last_ts=0
-	if [ -d "$transcripts" ]; then
-		f=$(rg -l -e "${wt}/" -e "${wt}\"" "$transcripts" 2>/dev/null \
-			| xargs stat "${stat_fmt[@]}" 2>/dev/null | sort -rn | head -1)
+	if [ ${#transcripts[@]} -gt 0 ]; then
+		f=$(find_chats "$wt" | tr '\n' '\0' \
+			| xargs -0 -r stat "${stat_fmt[@]}" 2>/dev/null | sort -rn | head -1)
 		if [ -n "$f" ]; then last_ts=$(echo "$f" | awk '{print $1}')
 			last=$(fmt_day "$last_ts" 2>/dev/null); fi
 	fi

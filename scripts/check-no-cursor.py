@@ -22,7 +22,7 @@ PATTERNS = [
     (r"\bOrigin\b|`origin pr|command -v origin|origin pr ", "Cursor's Origin forge (use gh)"),
 ]
 ALLOW_FILES = {"PLAN.md", "UPSTREAM", "LICENSE", "scripts/check-no-cursor.py"}
-ALLOW_LINE = re.compile(r"github\.com/cursor/plugins|cursor/plugins@|originally (written )?for Cursor")
+ALLOW_LINE = re.compile(r"github\.com/cursor/plugins|cursor/plugins@|originally (written )?for Cursor|check-no-cursor")
 SKIP_DIRS = {".git", "node_modules"}
 TEXT = {".md", ".sh", ".py", ".ts", ".json", ".yaml", ".yml", ".txt", ".tla", ".cfg"}
 

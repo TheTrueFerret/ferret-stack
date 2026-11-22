@@ -55,7 +55,7 @@ pstack, from `cursor/plugins` (latest commit `7a58391`, 21 Nov 2026), MIT licens
   `poteto-agent`, `arena`, `interrogate`, `swarm`, `setup-pstack`), and use
   the adapter for everything else.
 
-Your pick: c) Mix (approved 2026-11-22)
+Your pick: c) Mix (approved 2026-11-22). **Changed 2026-11-22 at your request:** all Cursor files and wording removed, so every file names T3, Claude Code, or Codex tools directly (option b). The guide is rewritten for T3. `scripts/check-no-cursor.py` keeps it that way.
 
 **D2. Staying in sync with poteto's updates?**
 - a) Copy once and own it from then on.
@@ -63,7 +63,7 @@ Your pick: c) Mix (approved 2026-11-22)
   in your dotfiles. Add a small script that shows what poteto changed since
   then, so we can merge it when you want.
 
-Your pick: b) Record the upstream commit (approved)
+Your pick: b) Record the upstream commit (approved). Since Cursor was removed, merging poteto's updates means hand-merging them into the rewritten text. `scripts/upstream-diff.sh` shows what changed.
 
 **D3. Names?**
 - a) Keep `poteto-mode`. The other skill names stay as poteto's.
@@ -86,7 +86,7 @@ Your pick: b) Rename router to `ferret-mode` (approved)
 - Drop at first (my pick): the Benny automation pack (Cursor only), and
   `make-bot-ui` (built for Grok Bot webhooks).
 
-Your changes: none, so drop Benny and `make-bot-ui` (approved, done in phase 3)
+Your changes: none, so drop Benny and `make-bot-ui` (approved). Done early, with the Cursor removal.
 
 **D5. pstack and your tstack overlap on PRs. Which wins?**
 pstack has its own babysit, shipping, and opening-a-PR playbooks. You already

@@ -14,4 +14,4 @@ Keep a finding only if it will still hold in six months, would change what a fut
 
 Present Accepted (problem, proposal, skill), Rejected (reason) and Backlog, and wait for approval before editing any skill.
 
-Never edit a skill under `plugins/cache/`. Before approval, show its destination, `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/`. After approval, copy the skill folder there and edit the copy. Never open a PR or push.
+Never edit a skill under `plugins/cache/`. Before approval, show its destination, `.claude/skills/<skill>/` (with a symlink at `.agents/skills/<skill>` for Codex) or `~/.claude/skills/<skill>/` and `~/.codex/skills/<skill>/`. After approval, copy the skill folder there and edit the copy. A skill those folders link into the Ferret Stack repo needs no copy, so edit it in the repo. Never open a PR or push.
