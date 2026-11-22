@@ -151,10 +151,11 @@ Your ideas:
 
 ### Phase 3 decisions (2026-11-22)
 
-1. Rename the router to `ferret-mode` and the setup skill to `setup-ferret-stack`. Done. The other skills keep poteto's names.
+1. Rename the router to `ferret-mode` and the setup skill to `setup-ferret-stack`. Done. The other skills kept pstack's names until item 8.
 2. PRs through tstack: no. pstack's own PR playbooks stay.
 3. Default for work: yes, through `scripts/install.sh --default`. Questions and chat are not routed through the stack yet. The "When this applies" list in `ferret-mode` grows as new domains are added.
 4. Screenshot rule (desktop and phone width for every UI change): added to ferret-mode's non-negotiables, the feature, bug-fix, and visual-parity playbooks, and worker.md.
 5. "Your setup" (Omarchy, dotfiles, projects): private, so not in this repo. It may go in your dotfiles.
 6. Models file: written by running `/setup-ferret-stack`.
 7. Language: English only.
+8. Rename `poteto-agent` to `ferret-agent` and `poteto-help` to `ferret-help`, so nothing in the stack carries poteto's name. Credit to poteto stays in the README, LICENSE, and UPSTREAM. Done.

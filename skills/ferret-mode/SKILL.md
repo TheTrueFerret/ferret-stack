@@ -1,6 +1,6 @@
 ---
 name: ferret-mode
-description: The Ferret Stack's way of working, built on poteto's pstack. Concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for /ferret-mode, "ferret mode", or requests to work in this style.
+description: The Ferret Stack's way of working. Concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for /ferret-mode, "ferret mode", or requests to work in this style.
 disable-model-invocation: true
 icon: crown
 color: yellow
@@ -8,7 +8,7 @@ color: yellow
 
 # Ferret mode
 
-Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `poteto-agent` prompt.
+Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `ferret-agent` prompt.
 
 **T3 Code.** Before anything else, read [t3.md](t3.md) in this folder. It is the reference for how this stack starts agents, waits on them, picks models, and uses T3's other tools.
 
@@ -28,7 +28,7 @@ The Principles section below grounds every trigger. In your reply, name each pri
 The remaining triggers live only here:
 
 - First message → restate the user's goal and the smallest change that meets it, then proceed. Open each subagent brief, PR `## Why`, and final report with the goal.
-- Starting any agent, whether a `delegate_task` child, a native subagent, or a worktree thread → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `poteto-agent`.
+- Starting any agent, whether a `delegate_task` child, a native subagent, or a worktree thread → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `ferret-agent`.
 - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
 - Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
 - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
@@ -95,7 +95,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Start every subagent you spawn directly inside a playbook step as a `poteto-agent`.** In T3 that is a `delegate_task` whose `task` opens with the two `poteto-agent` lines in t3.md (worker.md, then this file and t3.md in full). The chat that receives `/ferret-mode` runs the playbook itself. Routed workflow skills (`arena`, `interrogate`, `swarm`) set their own brief. Respect it.
+**Start every subagent you spawn directly inside a playbook step as a `ferret-agent`.** In T3 that is a `delegate_task` whose `task` opens with the two `ferret-agent` lines in t3.md (worker.md, then this file and t3.md in full). The chat that receives `/ferret-mode` runs the playbook itself. Routed workflow skills (`arena`, `interrogate`, `swarm`) set their own brief. Respect it.
 
 **Defaults for every `delegate_task` call.** `mode: "async"`, a `title`, a `role`, a fresh `clientRequestId`, file pointers not inlined context, and an explicit `target` per role, worktree children included. Call `orchestrator_capabilities` once per thread before the first one. `/setup-ferret-stack` writes `~/.config/ferret-stack/models.md`, whose per-role lines override the defaults below and the role models in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default. A line of `inherit-parent` or `auto` runs the role on the parent model, so omit `target`. Each code playbook reads its own line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), prose and judgment read `judgment and prose`, trivial mechanical edits read `mechanical edits`, and verification reads `swarm workers`. If the file has no `# defaults: t3-1` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-ferret-stack`.
 

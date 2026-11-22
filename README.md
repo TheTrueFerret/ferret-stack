@@ -1,10 +1,10 @@
 # Ferret Stack
 
-My fork of [pstack](https://github.com/cursor/plugins/tree/main/pstack) by [poteto](https://x.com/poteto), rebuilt to run in [T3 Code](https://github.com/pingdotgg/t3code) with Claude Code and Codex threads. pstack was originally written for Cursor. This fork removes the Cursor parts, so every skill names T3, Claude Code, or Codex tools directly.
+Ferret Stack started from [pstack](https://github.com/cursor/plugins/tree/main/pstack) by [poteto](https://x.com/poteto), which was written for Cursor. It has changed enough since then to be its own stack. It runs in [T3 Code](https://github.com/pingdotgg/t3code) with Claude Code and Codex threads, and every skill names T3, Claude Code, or Codex tools directly.
 
-The idea is poteto's: **if you want to go fast, go deep first.** The stack turns the agent into a careful engineering team. It writes less code, and proves it works. When you can trust one agent to write good, verifiable code, you can run many of them in parallel.
+It keeps poteto's core idea: **if you want to go fast, go deep first.** The stack turns the agent into a careful engineering team. It writes less code, and proves it works. When you can trust one agent to write good, verifiable code, you can run many of them in parallel.
 
-[PLAN.md](./PLAN.md) records how this fork is built and customized, phase by phase. [UPSTREAM](./UPSTREAM) records the Ferret Stack commit it started from.
+[PLAN.md](./PLAN.md) records how this fork is built and customized, phase by phase. [UPSTREAM](./UPSTREAM) records the pstack commit it started from.
 
 ## install
 
@@ -24,7 +24,7 @@ Two steps:
 1. Run [`/setup-ferret-stack`](./skills/setup-ferret-stack/SKILL.md) in a T3 thread. It reads the models T3 can run and writes `~/.config/ferret-stack/models.md`, one line per role.
 2. Use [`/ferret-mode`](./skills/ferret-mode/SKILL.md) (`$ferret-mode` in Codex) whenever you're doing anything that requires rigor.
 
-New here? The [guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs. Stuck, or unsure which skill fits? Ask [`/poteto-help`](./skills/poteto-help/SKILL.md).
+New here? The [guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs. Stuck, or unsure which skill fits? Ask [`/ferret-help`](./skills/ferret-help/SKILL.md).
 
 The other skills are situational, and the mode skill uses them for you as needed. Out of the box, code, prose, and judgment go to Claude Opus 5.5 at xhigh, mechanical edits to Claude Sonnet 5.5, and verification to Opus 5.5 at high. No role runs above xhigh. The review and design panels are Claude Fable 5.2, GPT-6 Luna on Codex, and Gemini 4 Neon on Antigravity. Outside a panel, Fable 5.2 runs only when you name it or after two Opus 5.5 runs of the same brief fail. [`/setup-ferret-stack`](./skills/setup-ferret-stack/SKILL.md) changes any of it.
 
@@ -118,7 +118,7 @@ the full rules and playbooks live in [`skills/ferret-mode/SKILL.md`](./skills/fe
 | skill | use it when |
 |---|---|
 | [`/ferret-mode`](./skills/ferret-mode/SKILL.md) | default entry point for any non-trivial task. |
-| [`/poteto-help`](./skills/poteto-help/SKILL.md) | you're new to the Ferret Stack, or unsure which skill, playbook, or principle fits. finds out what you're trying to do, answers that part, and hands you a prompt to type. runs only when you type `/poteto-help`. |
+| [`/ferret-help`](./skills/ferret-help/SKILL.md) | you're new to the Ferret Stack, or unsure which skill, playbook, or principle fits. finds out what you're trying to do, answers that part, and hands you a prompt to type. runs only when you type `/ferret-help`. |
 | [`/in-your-own-words`](./skills/in-your-own-words/SKILL.md) | you want the agent to play back your goal and the problem before it starts. runs only when you type `/in-your-own-words`. |
 | [`/sharpen`](./skills/sharpen/SKILL.md) | you want a prompt made deeper, not bigger, before you send it: what a top professional would do that you didn't ask for, the raw material they'd start from, their methods and tools, and an outside check that the result is right. hands back the rewritten prompt, which asks the agent to prototype any choice an experiment can settle and leaves product and preference choices to you. doesn't do the task. runs only when you type `/sharpen`. |
 | [`/how`](./skills/how/SKILL.md) | you want a walkthrough of how a subsystem works. |
@@ -197,16 +197,16 @@ reflect:           /reflect that took too long. capture what we learned so the n
 correct:           /correct
 show-me-your-work: /show-me-your-work keep a decision trail i can review when i'm back.
 automate-me:       /automate-me
-help:              /poteto-help which skill should i use to review this branch?
+help:              /ferret-help which skill should i use to review this branch?
 ```
 
 </details>
 
-## the `poteto-agent` and Comment Sicko subagents
+## the `ferret-agent` and Comment Sicko subagents
 
 [`/ferret-mode`](./skills/ferret-mode/SKILL.md) runs in the chat that receives it. that chat owns the playbook, the todo list, and every subagent spawn.
 
-a [`poteto-agent`](./agents/poteto-agent.md) is the wrapper for delegates started during a run. in T3 it is a `delegate_task` whose brief opens by reading `worker.md`, then `ferret-mode` in full, including its inline principles index, before doing any work. a plain worker skips that read and drifts. do not start a `poteto-agent` to run the playbook itself.
+a [`ferret-agent`](./agents/ferret-agent.md) is the wrapper for delegates started during a run. in T3 it is a `delegate_task` whose brief opens by reading `worker.md`, then `ferret-mode` in full, including its inline principles index, before doing any work. a plain worker skips that read and drifts. do not start a `ferret-agent` to run the playbook itself.
 
 [Comment Sicko](./agents/comment-sicko.md) is a read-only comment reviewer. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
 
@@ -248,7 +248,7 @@ twenty-four short skills, one principle each. `ferret-mode` indexes them inline 
 
 ## why are there no planning skills?
 
-poteto doesn't believe in planning. the best spec is code. if you do want to make a plan, [`/ferret-mode`](./skills/ferret-mode/SKILL.md) covers it with the multi-phase plan playbook, but it's not a default.
+Ferret Stack doesn't believe in planning. the best spec is code. if you do want to make a plan, [`/ferret-mode`](./skills/ferret-mode/SKILL.md) covers it with the multi-phase plan playbook, but it's not a default.
 
 ## make it yours
 
