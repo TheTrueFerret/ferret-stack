@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Show me your work
 
+In T3 Code, read [the T3 adapter](../poteto-mode/t3.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to T3's tools.
+
 Keep one canonical log.
 
 ## The format

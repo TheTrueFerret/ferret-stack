@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Type System Discipline
 
+In T3 Code, read [the T3 adapter](../poteto-mode/t3.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to T3's tools.
+
 Make the compiler reject impossible states, mismatched primitives, and unhandled variants.
 
 - **Brand semantic primitives.** If two arguments share a primitive type but mean different things, give each its own type. Validate once at creation.

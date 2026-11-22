@@ -6,7 +6,9 @@ disable-model-invocation: true
 
 # Arena
 
-Open a todolist with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything.
+In T3 Code, read [the T3 adapter](../poteto-mode/t3.md) once per session before you follow this skill. Every spawn below is a `delegate_task`.
+
+Open a todolist with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything. With no todo tool, keep it as a numbered list in your reply.
 
 ## Phase A: Frame
 
@@ -14,18 +16,18 @@ Every candidate gets the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners from the `arena runners` line in `~/.cursor/rules/pstack-models.mdc`, by default `claude-fable-5-2-high`, `claude-opus-5-5-high-fast`, and `gemini-4-neon-xhigh`. An `auto` or `inherit-parent` entry is the parent model, so omit `model` and spawn `generalPurpose`. If the Task tool rejects a slug, use the nearest valid slug of the same family or drop the seat, keep at least two runners, and say so. Families go by prefix, and the longest match wins: `claude-fable-*`, `claude-*`, and `gemini-*`, after dropping a leading `cursor-`. Any other slug's family is its text before the first hyphen. Spawn more for multiple design directions, and repeat one model when the work is generation-bound, not judgment-sensitive. Pick each subagent's reasoning level per the Subagents section of the **poteto-mode** skill.
-4. Give each candidate its own output location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
+3. Pick the runners from the `arena runners` line in `~/.config/ferret-stack/models.md`, by default `claudeAgent/claude-fable-5-2 effort=high`, `codex/gpt-6-luna reasoningEffort=high`, and `antigravity/gemini-4-neon thought_level=xhigh`. An `auto` or `inherit-parent` entry is the parent model, so omit `target`. Check each runner against `orchestrator_capabilities`. If a provider is disabled or `delegate_task` rejects a target, use the nearest listed model of the same family or drop the seat, keep at least two runners from different vendors, and say so. Families go by model id prefix, and the longest match wins: `claude-fable-*`, `claude-*`, `gemini-*`, and `gpt-*`. Any other model's family is its text before the first hyphen. Spawn more for multiple design directions, and repeat one model when the work is generation-bound, not judgment-sensitive. Pick each subagent's reasoning level per the Subagents section of the **poteto-mode** skill.
+4. Give each candidate its own output location, per the **separate-before-serializing-shared-state** principle skill. For anything in a git repo, that is `isolation: "worktree"`, and the candidate commits on its own branch (t3.md, Worktrees). Otherwise it is `/tmp/arena-<slug>/candidate-<n>/` with `isolation: "shared"`.
 
 ## Phase B: Fan out
 
-Spawn all N subagents in one message with `run_in_background: true`, each with the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected.
+Spawn all N subagents in one message: N `delegate_task` calls with `mode: "async"`, `role: "design"` (or `"implementation"` for code), and a `title` of `arena <slug>: candidate <n>`. Each `task` opens with `Read <poteto-mode>/worker.md before anything else.`, then gives the task, the path to the shared grounding, its own output location, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected. A worktree candidate also reports its worktree path, branch, and commit SHA. Do not poll. Each completion wakes you, and Phase C starts on the last one.
 
 If a candidate produces no output, proceed with N-1 and note the dropout.
 
 ## Phase C: Cross-judge
 
-After all Phase B candidates complete, spawn one readonly judge from the `arena cross-judge pool` line in `~/.cursor/rules/pstack-models.mdc`, by default `claude-opus-5-5-high-fast`, `gemini-4-neon-xhigh`. The judge is never from the parent's vendor, and Fable counts as Claude for that check, so use the first entry from another vendor. An `auto` or `inherit-parent` entry is the parent model. If you do not know the parent's model, use the first real slug and say that the vendor check did not run. If the Task tool rejects a slug, use the nearest valid slug of the same family, then the next such entry, or skip the judge, and say so. While you read in Phase D, the judge scores each candidate, by path label, on each rubric criterion and recommends a base.
+After all Phase B candidates complete, spawn one read-only judge (`delegate_task`, `role: "review"`, a brief that says read-only) from the `arena cross-judge pool` line in `~/.config/ferret-stack/models.md`, by default `codex/gpt-6-luna reasoningEffort=high`, `antigravity/gemini-4-neon thought_level=xhigh`, `claudeAgent/claude-opus-5-5 effort=high`. The judge is never from the parent's vendor. Vendor comes from the model id (t3.md, Models), and Fable counts as Claude for that check, so use the first entry from another vendor. Your own model is in `orchestrator_capabilities` as the inherited model. An `auto` or `inherit-parent` entry is the parent model, so it never judges. If `delegate_task` rejects a target, use the nearest listed model of the same family, then the next such entry, or skip the judge, and say so. While you read in Phase D, the judge scores each candidate, by path label, on each rubric criterion and recommends a base.
 
 ## Phase D: Pick a base
 
