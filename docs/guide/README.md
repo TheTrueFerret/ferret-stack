@@ -1,6 +1,6 @@
 # The Ferret Stack guide
 
-pstack is poteto's skill stack, originally written for Cursor. This fork runs it in T3 Code, in Claude Code and Codex threads.
+Ferret Stack started from poteto's pstack, originally written for Cursor. It now runs in T3 Code, in Claude Code and Codex threads.
 
 Ferret Stack works best when you stop micromanaging the agent. You describe what you want and how you'll know it's done. `/ferret-mode` picks the playbook, runs the other skills as the steps need them, and shows you the evidence. This guide teaches that habit with realistic prompts.
 
@@ -19,10 +19,10 @@ Here's what you'll learn:
 
 Read the pages in order the first time. After that, each page stands alone.
 
-When you're stuck, or can't tell which skill fits, type [`/poteto-help`](../../skills/poteto-help/SKILL.md) with your question:
+When you're stuck, or can't tell which skill fits, type [`/ferret-help`](../../skills/ferret-help/SKILL.md) with your question:
 
 ```text
-/poteto-help which skill should i use to review this branch?
+/ferret-help which skill should i use to review this branch?
 ```
 
 It answers, hands you a prompt to send, and links the skill or guide page the answer came from. It doesn't start the work, because a Ferret Stack run spends real tokens, so you send the prompt when you're ready. It runs only when you type it.

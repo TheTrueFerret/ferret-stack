@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fails if Cursor-specific names or mechanics appear in the stack.
+"""Fails if Cursor-specific names or mechanics, or pstack's old names, appear in the stack.
 
 The stack started as poteto's pstack, written for Cursor. Everything now names
 T3 Code, Claude Code, or Codex tools directly. Run this after any edit, and
@@ -19,6 +19,7 @@ PATTERNS = [
     (r"\bcontrol-(ui|cli)\b|\bdeslop\b|cursor-team-kit", "cursor-team-kit skills"),
     (r"\.mdc\b|agent-transcripts|\bAutomations?\b|api2\.cursor", "Cursor files and automations"),
     (r"\bclaude-[a-z0-9-]+-(?:xhigh|high|medium|low)(?:-fast)?\b|\bgemini-4-neon-(?:xhigh|high|medium|low)\b|-fast\b`", "Cursor model slugs (use provider/model option=value)"),
+    (r"\bpoteto-(agent|help|mode)\b|\bsetup-pstack\b", "pstack's old names (use ferret-agent, ferret-help, ferret-mode, setup-ferret-stack)"),
     (r"\bOrigin\b|`origin pr|command -v origin|origin pr ", "Cursor's Origin forge (use gh)"),
 ]
 ALLOW_FILES = {"PLAN.md", "UPSTREAM", "LICENSE", "scripts/check-no-cursor.py"}

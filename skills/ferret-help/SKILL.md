@@ -1,10 +1,10 @@
 ---
-name: poteto-help
-description: Guides users through Ferret Stack setup, /ferret-mode, and picking the skill, playbook, or principle for a task. Type /poteto-help with a question.
+name: ferret-help
+description: Guides users through Ferret Stack setup, /ferret-mode, and picking the skill, playbook, or principle for a task. Type /ferret-help with a question.
 disable-model-invocation: true
 ---
 
-# Poteto help
+# Ferret help
 
 Answer the user's question about Ferret Stack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a Ferret Stack run spends real tokens, so let them send the prompt.
 
@@ -51,7 +51,7 @@ Other tools can read the skills, because they use the Agent Skills format. But m
 
 `/ferret-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-ferret-mode.md) has examples.
 
-Typing `/ferret-mode` loads the skill for the task it starts. It fades as the chat moves on, so start each new task with `/ferret-mode`. Mid-chat, "new task" makes the mode match a fresh playbook. `/ferret-mode` already uses `poteto-agent` for the subagents its playbook steps spawn. To get the same style from a subagent of your own, start it with `delegate_task` and the two `poteto-agent` lines from [`t3.md`](../ferret-mode/t3.md).
+Typing `/ferret-mode` loads the skill for the task it starts. It fades as the chat moves on, so start each new task with `/ferret-mode`. Mid-chat, "new task" makes the mode match a fresh playbook. `/ferret-mode` already uses `ferret-agent` for the subagents its playbook steps spawn. To get the same style from a subagent of your own, start it with `delegate_task` and the two `ferret-agent` lines from [`t3.md`](../ferret-mode/t3.md).
 
 ## Pick a skill
 
@@ -91,7 +91,7 @@ The default answer is `/ferret-mode`, which runs most of the others when its ste
 | Turn their own working habits into a personal mode skill | [`/automate-me`](../automate-me/SKILL.md) |
 | Turn what a finished task taught into skill edits | [`/reflect`](../reflect/SKILL.md) |
 | Stop agents from repeating the same mistakes in this repo | [`/correct`](../correct/SKILL.md) |
-| Find their way around the Ferret Stack | `/poteto-help` |
+| Find their way around the Ferret Stack | `/ferret-help` |
 
 If a skill directory next to this one is missing from the table, read its frontmatter and route by its description. The `principle-*` directories are covered under principles below.
 
