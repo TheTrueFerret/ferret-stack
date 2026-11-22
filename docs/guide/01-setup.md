@@ -4,13 +4,14 @@ In this page you install the skills, pick which models Ferret Stack uses, and ru
 
 ## Install the skills
 
-Clone the repository, then run its install script from the repository root:
+Clone the repository, then run its install script with `--default`:
 
 ```text
-scripts/install.sh
+git clone https://github.com/TheTrueFerret/ferret-stack.git ~/coding-projects/ferret-stack
+~/coding-projects/ferret-stack/scripts/install.sh --default
 ```
 
-The script links every skill into `~/.claude/skills` and `~/.codex/skills`, and the two agents into `~/.claude/agents`. Claude Code and Codex threads in T3 Code both find the skills from there. The script is safe to run again, and it skips any path where something else already sits. To remove the stack, run `scripts/install.sh --uninstall`. It deletes only its own links.
+The script links every skill into `~/.claude/skills` and `~/.codex/skills`, and the two agents into `~/.claude/agents`. Claude Code and Codex threads in T3 Code both find the skills from there. The script is safe to run again, and it skips any path where something else already sits. `--default` also adds a marked block to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`, so a request to change something runs in ferret mode without typing `/ferret-mode`, while questions and chat are answered normally. Leave it off if you only want the slash command. To remove the stack, run `scripts/install.sh --uninstall`. It deletes only its own links and that block.
 
 Because the skills are links, a `git pull` in the repository updates them everywhere at once.
 

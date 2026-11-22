@@ -9,8 +9,8 @@ The idea is poteto's: **if you want to go fast, go deep first.** The stack turns
 ## install
 
 ```bash
-git clone <this repo> ~/coding-projects/ferret-stack
-~/coding-projects/ferret-stack/scripts/install.sh
+git clone https://github.com/TheTrueFerret/ferret-stack.git ~/coding-projects/ferret-stack
+~/coding-projects/ferret-stack/scripts/install.sh --default
 ```
 
 `scripts/install.sh` symlinks every skill into `~/.claude/skills` and `~/.codex/skills`, and the two agents into `~/.claude/agents`. Editing the repo updates every agent at once.

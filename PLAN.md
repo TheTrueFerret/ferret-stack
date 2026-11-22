@@ -120,7 +120,7 @@ Your pick: a) Symlinks (approved)
 **D8. Where does it live?** `~/coding-projects/ferret-stack`, with its own git
 repo. Later on GitHub: private or public?
 
-Your pick: `~/coding-projects/ferret-stack`. Private or public on GitHub: undecided, nothing is pushed yet.
+Your pick: `~/coding-projects/ferret-stack`, public at https://github.com/TheTrueFerret/ferret-stack (decided 2026-11-22). Installed everywhere through your dotfiles, which clone it and run `scripts/install.sh --default`.
 
 ## 5. Customizing (after T3 works, you choose)
 
