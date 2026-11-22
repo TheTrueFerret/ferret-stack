@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # Technical writing
 
-In T3 Code, read [the T3 adapter](../poteto-mode/t3.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to T3's tools.
-
 Write so a tired engineer understands on the first read.
 
 - Cut every word that does no work.

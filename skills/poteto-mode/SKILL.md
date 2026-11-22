@@ -10,7 +10,7 @@ color: yellow
 
 Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `poteto-agent` prompt.
 
-**T3 Code.** Before anything else, read [t3.md](t3.md) in this folder. It maps every Cursor name in pstack (the `Task` tool, model slugs, `/loop`, cloud agents, transcripts) to T3's tools. The rules below already use T3 names where they start agents.
+**T3 Code.** Before anything else, read [t3.md](t3.md) in this folder. It is the reference for how this stack starts agents, waits on them, picks models, and uses T3's other tools.
 
 ## Non-negotiables
 
@@ -23,10 +23,10 @@ The remaining triggers live only here:
 - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
 - Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
 - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
-- Before commit → `/deslop` from the `cursor-team-kit` plugin when installed, else skip it with the line in t3.md. Before review → **no-comments**.
-- Shipping UI / IDE / CLI → drive it as a user would: T3's `preview_*` browser tools or Playwright for UI, the shell or `tmux` for CLIs and TUIs (t3.md, Other Cursor names).
+- Before commit → reread your diff and delete what the change does not need, per the Laziness Protocol. Before review → **no-comments**.
+- Shipping UI / IDE / CLI → drive it as a user would: T3's `preview_*` browser tools or Playwright for UI, the shell or `tmux` for CLIs and TUIs (t3.md, Other tools).
 - A number you measured → **benchmark-checklist**.
-- PR status → the **Babysit** playbook, not Cursor's built-in babysit skill. Landing a green stack → the **Shipping** playbook.
+- PR status → the **Babysit** playbook. Landing a green stack → the **Shipping** playbook.
 - Bot review comments → judge each on its merits.
 - Long or unattended work → **show-me-your-work**.
 
@@ -108,6 +108,6 @@ Write short declarative sentences with no long dash and no colon as a connector.
 
 ## Playbooks
 
-Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool first, or into a numbered list in your reply when the session has no todo tool (t3.md). Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill.
+Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todo tool first, or into a numbered list in your reply when the session has no todo tool (t3.md). Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill.
 
 Investigation, Bug fix, Perf issue, Hillclimb, Runtime forensics, Trace forensics, Feature, Refactoring, Prototype, Visual parity, Authoring a skill, Eval, Babysit, Shipping, Autonomous run, Autopilot-full, Autopilot-stack, Session pickup, Pause safely, Multi-phase plan, Worktree cleanup, Opening a PR.

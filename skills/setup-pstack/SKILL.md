@@ -5,7 +5,7 @@ description: Configure which models pstack uses per role and at what reasoning b
 
 # Setup pstack
 
-Write `~/.config/ferret-stack/models.md`, the file that sets pstack's model per role. Every pstack skill reads it before it starts an agent. The target format is in [the T3 adapter](../poteto-mode/t3.md), section Models.
+Write `~/.config/ferret-stack/models.md`, the file that sets pstack's model per role. Every pstack skill reads it before it starts an agent. The target format is in [t3.md](../poteto-mode/t3.md), section Models.
 
 ## Steps
 
@@ -16,8 +16,6 @@ Call `orchestrator_capabilities` (a `t3-code` MCP tool, which may need loading f
 ### 2. Load current state
 
 The default role-to-model mapping is the file shape shown in step 5 below. If `~/.config/ferret-stack/models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5 is from a retired role. Drop it, and tell the user.
-
-If the user has an old Cursor rule at `~/.cursor/rules/pstack-models.mdc` and no models file yet, map each of its slugs with the table in t3.md (Models), and treat the result as the current choices.
 
 ### 3. Budget, map, and confirm
 

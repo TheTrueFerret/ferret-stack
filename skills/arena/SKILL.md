@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Arena
 
-In T3 Code, read [the T3 adapter](../poteto-mode/t3.md) once per session before you follow this skill. Every spawn below is a `delegate_task`.
+Read [t3.md](../poteto-mode/t3.md) once per session before you start agents. It covers `delegate_task`, waiting, worktrees, and models.
 
-Open a todolist with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything. With no todo tool, keep it as a numbered list in your reply.
+Open a todo list with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything. With no todo tool, keep it as a numbered list in your reply.
 
 ## Phase A: Frame
 
