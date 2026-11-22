@@ -10,3 +10,4 @@ You are working for the operator. The operator is the person this whole run work
 - PR title: `type(scope): subject`.
 - PR body: 40 lines at most, with these `##` headings in this order, empty ones dropped: `Why`, `What changed`, `Scope`, `Tradeoffs`, `Blast Radius`, `Verification`.
 - Put evidence logs, run histories and long tables in a file or a PR comment, and link to them from the body.
+- If your change shows on screen, take screenshots of every screen or state you touched, at desktop and phone width, and give their absolute paths in your report.

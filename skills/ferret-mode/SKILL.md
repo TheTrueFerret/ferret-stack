@@ -1,16 +1,25 @@
 ---
-name: poteto-mode
-description: poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for poteto, /poteto-mode, or requests to work in this style.
+name: ferret-mode
+description: The Ferret Stack's way of working, built on poteto's pstack. Concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for /ferret-mode, "ferret mode", or requests to work in this style.
 disable-model-invocation: true
 icon: crown
 color: yellow
 ---
 
-# Poteto mode
+# Ferret mode
 
 Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `poteto-agent` prompt.
 
 **T3 Code.** Before anything else, read [t3.md](t3.md) in this folder. It is the reference for how this stack starts agents, waits on them, picks models, and uses T3's other tools.
+
+## When this applies
+
+- **Typed.** The user typed `/ferret-mode` (or `$ferret-mode`, or "ferret mode"). It applies to the whole task, questions included.
+- **By default.** The user's global instructions loaded it without the command. Then it applies only when the message asks for work that changes something: writing or fixing code, editing files or config, refactoring, building a feature, or opening, updating, or landing a PR.
+- **Not by default.** A question, an explanation, an opinion, research, a review the user only wants to read, or conversation. Answer it the normal way, without a playbook. When unsure, answer normally and say "ferret mode" would run it as a task.
+- **Skipped.** The user says "no ferret". Work the normal way for that message.
+
+The default list above is meant to grow. New domains get a line in **By default** when they are ready.
 
 ## Non-negotiables
 
@@ -25,6 +34,7 @@ The remaining triggers live only here:
 - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
 - Before commit → reread your diff and delete what the change does not need, per the Laziness Protocol. Before review → **no-comments**.
 - Shipping UI / IDE / CLI → drive it as a user would: T3's `preview_*` browser tools or Playwright for UI, the shell or `tmux` for CLIs and TUIs (t3.md, Other tools).
+- Changed anything a person sees (a page, a component, styling, on-screen text) → before you report, take screenshots of every screen or state you touched, at desktop and at phone width, plus any dialog, empty state, or error you changed. Embed each in the reply as `![what it shows](/absolute/path.png)`, with one line saying what it shows. If you cannot get one (it needs a sign-in you lack, or the app will not run), say so plainly and say what you did instead, such as a throwaway preview page with made-up data. Delete throwaway pages before committing.
 - A number you measured → **benchmark-checklist**.
 - PR status → the **Babysit** playbook. Landing a green stack → the **Shipping** playbook.
 - Bot review comments → judge each on its merits.
@@ -85,9 +95,9 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Start every subagent you spawn directly inside a playbook step as a `poteto-agent`.** In T3 that is a `delegate_task` whose `task` opens with the two `poteto-agent` lines in t3.md (worker.md, then this file and t3.md in full). The chat that receives `/poteto-mode` runs the playbook itself. Routed workflow skills (`arena`, `interrogate`, `swarm`) set their own brief. Respect it.
+**Start every subagent you spawn directly inside a playbook step as a `poteto-agent`.** In T3 that is a `delegate_task` whose `task` opens with the two `poteto-agent` lines in t3.md (worker.md, then this file and t3.md in full). The chat that receives `/ferret-mode` runs the playbook itself. Routed workflow skills (`arena`, `interrogate`, `swarm`) set their own brief. Respect it.
 
-**Defaults for every `delegate_task` call.** `mode: "async"`, a `title`, a `role`, a fresh `clientRequestId`, file pointers not inlined context, and an explicit `target` per role, worktree children included. Call `orchestrator_capabilities` once per thread before the first one. `/setup-pstack` writes `~/.config/ferret-stack/models.md`, whose per-role lines override the defaults below and the role models in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default. A line of `inherit-parent` or `auto` runs the role on the parent model, so omit `target`. Each code playbook reads its own line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), prose and judgment read `judgment and prose`, trivial mechanical edits read `mechanical edits`, and verification reads `swarm workers`. If the file has no `# defaults: t3-1` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-pstack`.
+**Defaults for every `delegate_task` call.** `mode: "async"`, a `title`, a `role`, a fresh `clientRequestId`, file pointers not inlined context, and an explicit `target` per role, worktree children included. Call `orchestrator_capabilities` once per thread before the first one. `/setup-ferret-stack` writes `~/.config/ferret-stack/models.md`, whose per-role lines override the defaults below and the role models in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default. A line of `inherit-parent` or `auto` runs the role on the parent model, so omit `target`. Each code playbook reads its own line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), prose and judgment read `judgment and prose`, trivial mechanical edits read `mechanical edits`, and verification reads `swarm workers`. If the file has no `# defaults: t3-1` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-ferret-stack`.
 
 - Code, prose, and judgment: `claudeAgent/claude-opus-5-5 effort=xhigh`.
 - Trivial mechanical edits: `claudeAgent/claude-sonnet-5-5 effort=medium`.
@@ -96,7 +106,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **Fable 5.2 is an exception.** It runs outside a panel only when the user named it for this task or two Opus 5.5 xhigh runs of the same brief failed its check. Say which. Difficulty alone never qualifies.
 
-**Match the model to the job.** Start from the role's line or default, keep its family, and set the level the job needs. The `/setup-pstack` budget sets each role's starting level. Panel seats keep their listed level. Raise any other role one step, up to xhigh, for the hardest or subtlest work, lower it one step for judgment, and two or more steps for routine work. No role runs above xhigh. Fast mode stays off unless the user asks for it. Verification always runs on the `swarm workers` model. If `delegate_task` rejects a target, never pass it again. Fall back to the role's line or default, then the calling skill's fallback, then the closest model of the same family that `orchestrator_capabilities` lists, then omit `target`. Say so.
+**Match the model to the job.** Start from the role's line or default, keep its family, and set the level the job needs. The `/setup-ferret-stack` budget sets each role's starting level. Panel seats keep their listed level. Raise any other role one step, up to xhigh, for the hardest or subtlest work, lower it one step for judgment, and two or more steps for routine work. No role runs above xhigh. Fast mode stays off unless the user asks for it. Verification always runs on the `swarm workers` model. If `delegate_task` rejects a target, never pass it again. Fall back to the role's line or default, then the calling skill's fallback, then the closest model of the same family that `orchestrator_capabilities` lists, then omit `target`. Say so.
 
 You own every subagent's work. Review the diff and write your own summary. A second opinion is the same prompt on another vendor's model.
 

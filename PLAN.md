@@ -1,6 +1,6 @@
 # Ferret Stack plan (draft, edit anything)
 
-Status: **approved 2026-11-22 with the recommended picks. Phases 1 and 2 done (commits 4ba4fa5, 2fe4996, 9ef9996). Phase 3 next.** Change, cross out, or add anything you
+Status: **approved 2026-11-22 with the recommended picks. Phases 1 and 2 done, Cursor removed, phase 3 in progress.** Change, cross out, or add anything you
 like. Answer the decisions in section 4 (write your pick after "Your pick:").
 When you say go, I build only what this file says, one phase at a time, and
 show you each phase before starting the next.
@@ -96,7 +96,7 @@ use tstack's `full-send`, `full-stop`, `babysit-pr`, `file-pr`, `council`, and
 - b) Keep pstack's own PR playbooks.
 - c) Keep both, and you choose each time.
 
-Your pick: a) Hand off to tstack (approved)
+Your pick: a) Hand off to tstack (approved). **Changed 2026-11-22:** keep pstack's own PR playbooks (b). tstack stays installed for when you want it.
 
 **D6. Default model per role** (you can change any of these later):
 
@@ -148,3 +148,13 @@ Your ideas:
 4. **New areas.** Later, from your own design.
 
 ## 7. Your notes
+
+### Phase 3 decisions (2026-11-22)
+
+1. Rename the router to `ferret-mode` and the setup skill to `setup-ferret-stack`. Done. The other skills keep poteto's names.
+2. PRs through tstack: no. pstack's own PR playbooks stay.
+3. Default for work: yes, through `scripts/install.sh --default`. Questions and chat are not routed through the stack yet. The "When this applies" list in `ferret-mode` grows as new domains are added.
+4. Screenshot rule (desktop and phone width for every UI change): added to ferret-mode's non-negotiables, the feature, bug-fix, and visual-parity playbooks, and worker.md.
+5. "Your setup" (Omarchy, dotfiles, projects): private, so not in this repo. It may go in your dotfiles.
+6. Models file: written by running `/setup-ferret-stack`.
+7. Language: English only.

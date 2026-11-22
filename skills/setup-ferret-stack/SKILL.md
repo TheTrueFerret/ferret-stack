@@ -1,11 +1,11 @@
 ---
-name: setup-pstack
-description: Configure which models pstack uses per role and at what reasoning budget. Detects your available models in T3 Code and writes a models file that overrides the skill defaults. Use for /setup-pstack, "configure pstack models", "pstack budget", or changing pstack's model choices.
+name: setup-ferret-stack
+description: Configure which models Ferret Stack uses per role and at what reasoning budget. Detects your available models in T3 Code and writes a models file that overrides the skill defaults. Use for /setup-ferret-stack, "configure Ferret Stack models", "Ferret Stack budget", or changing Ferret Stack's model choices.
 ---
 
-# Setup pstack
+# Setup Ferret Stack
 
-Write `~/.config/ferret-stack/models.md`, the file that sets pstack's model per role. Every pstack skill reads it before it starts an agent. The target format is in [t3.md](../poteto-mode/t3.md), section Models.
+Write `~/.config/ferret-stack/models.md`, the file that sets Ferret Stack's model per role. Every Ferret Stack skill reads it before it starts an agent. The target format is in [t3.md](../ferret-mode/t3.md), section Models.
 
 ## Steps
 
@@ -35,10 +35,10 @@ Every real target written must be in the detected set, on an enabled provider, w
 
 ### 5. Write the file
 
-Create `~/.config/ferret-stack/` if needed, and write `models.md` with the comment lines, the `# defaults: t3-1` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels poteto-mode uses. Overwrite the whole file so re-runs stay idempotent. Shape:
+Create `~/.config/ferret-stack/` if needed, and write `models.md` with the comment lines, the `# defaults: t3-1` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels ferret-mode uses. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
-# pstack model configuration for T3 Code. One line per role. Delete a line to fall back to the skill default.
+# Ferret Stack model configuration for T3 Code. One line per role. Delete a line to fall back to the skill default.
 # A value is <providerInstanceId>/<model id> <option id>=<value>, or a comma-separated list of them.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit `target` in delegate_task). Alias entries in a panel list still count toward its fan-out.
 # defaults: t3-1
@@ -57,12 +57,12 @@ interrogate reviewers: claudeAgent/claude-fable-5-2 effort=high, codex/gpt-6-lun
 
 ### 6. Confirm
 
-Tell the user the file was written and that every new pstack run reads it. Re-running this skill updates it.
+Tell the user the file was written and that every new Ferret Stack run reads it. Re-running this skill updates it.
 
 ### 7. Offer a verification skill (optional)
 
-Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin). On no, move on without pushing.
+Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, invoke `/create-verification-skill` (resolves wherever Ferret Stack is installed: workspace, user, or plugin). On no, move on without pushing.
 
 ### 8. Offer a formal verification skill (optional)
 
-Check whether the project already has a formal verification skill (a project skill that runs a model checker, a proof, or another verifier against the code). If not, offer once: "want a formal verification skill, so agents can prove a key property of your code holds in every case in scope, not only the cases tests reach? I can generate one with /create-formal-verification-skill." On yes, invoke `/create-formal-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin). On no, move on without pushing.
+Check whether the project already has a formal verification skill (a project skill that runs a model checker, a proof, or another verifier against the code). If not, offer once: "want a formal verification skill, so agents can prove a key property of your code holds in every case in scope, not only the cases tests reach? I can generate one with /create-formal-verification-skill." On yes, invoke `/create-formal-verification-skill` (resolves wherever Ferret Stack is installed: workspace, user, or plugin). On no, move on without pushing.

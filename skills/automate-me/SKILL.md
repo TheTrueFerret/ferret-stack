@@ -28,7 +28,7 @@ Update mode changes the rest of the flow:
 
 Locate the active workspace's history before fanning out. T3 threads come from `t3_thread_search` scoped to this project, then `t3_thread_read`. Raw files are Claude Code's `~/.claude/projects/<slug>/*.jsonl`, where `<slug>` is the workspace path with `/` and `.` turned into `-`, and Codex's `~/.codex/sessions/<yyyy>/<mm>/<dd>/*.jsonl`, filtered to sessions whose working directory is this workspace. Use only those. Don't glob across every `~/.claude/projects/*/`. That crosses workspace boundaries and reads private chats from unrelated projects.
 
-Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Pick each subagent's reasoning level for the job, per the Subagents section of the **poteto-mode** skill. Each slice mining subagent reads transcripts from the workspace-scoped threads and paths the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
+Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Pick each subagent's reasoning level for the job, per the Subagents section of the **ferret-mode** skill. Each slice mining subagent reads transcripts from the workspace-scoped threads and paths the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
 
 - Response preferences (length, tone, format, "dumb it down" corrections)
 - Delegation habits (subagents, models, specialized workflows, parallelism)
@@ -60,7 +60,7 @@ Group the combined signals into sections. Common ones (use only what applies):
 - **Process**: git worktrees, commits, PRs, review/merge tooling.
 - **Skills**: skill-authoring habits, fix-the-skill-first, proposing new skills.
 
-The **poteto-mode** skill shows the shape. Read it for granularity. Don't copy its content. The user's rules are not the same as poteto-mode's.
+The **ferret-mode** skill shows the shape. Read it for granularity. Don't copy its content. The user's rules are not the same as ferret-mode's.
 
 ### 4. Draft the skill
 

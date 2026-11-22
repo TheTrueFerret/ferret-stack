@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Interrogate
 
-Read [t3.md](../poteto-mode/t3.md) once per session before you start agents. It covers `delegate_task`, waiting, worktrees, and models.
+Read [t3.md](../ferret-mode/t3.md) once per session before you start agents. It covers `delegate_task`, waiting, worktrees, and models.
 
 Adversaries try to break a change or a design. A finding survives only when a run proves it. Report the findings. Do not apply fixes.
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Arena
 
-Read [t3.md](../poteto-mode/t3.md) once per session before you start agents. It covers `delegate_task`, waiting, worktrees, and models.
+Read [t3.md](../ferret-mode/t3.md) once per session before you start agents. It covers `delegate_task`, waiting, worktrees, and models.
 
 Open a todo list with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything. With no todo tool, keep it as a numbered list in your reply.
 
@@ -16,12 +16,12 @@ Every candidate gets the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners from the `arena runners` line in `~/.config/ferret-stack/models.md`, by default `claudeAgent/claude-fable-5-2 effort=high`, `codex/gpt-6-luna reasoningEffort=high`, and `antigravity/gemini-4-neon thought_level=xhigh`. An `auto` or `inherit-parent` entry is the parent model, so omit `target`. Check each runner against `orchestrator_capabilities`. If a provider is disabled or `delegate_task` rejects a target, use the nearest listed model of the same family or drop the seat, keep at least two runners from different vendors, and say so. Families go by model id prefix, and the longest match wins: `claude-fable-*`, `claude-*`, `gemini-*`, and `gpt-*`. Any other model's family is its text before the first hyphen. Spawn more for multiple design directions, and repeat one model when the work is generation-bound, not judgment-sensitive. Panel seats keep the reasoning level in their line or default. Pick any other subagent's level per the Subagents section of the **poteto-mode** skill.
+3. Pick the runners from the `arena runners` line in `~/.config/ferret-stack/models.md`, by default `claudeAgent/claude-fable-5-2 effort=high`, `codex/gpt-6-luna reasoningEffort=high`, and `antigravity/gemini-4-neon thought_level=xhigh`. An `auto` or `inherit-parent` entry is the parent model, so omit `target`. Check each runner against `orchestrator_capabilities`. If a provider is disabled or `delegate_task` rejects a target, use the nearest listed model of the same family or drop the seat, keep at least two runners from different vendors, and say so. Families go by model id prefix, and the longest match wins: `claude-fable-*`, `claude-*`, `gemini-*`, and `gpt-*`. Any other model's family is its text before the first hyphen. Spawn more for multiple design directions, and repeat one model when the work is generation-bound, not judgment-sensitive. Panel seats keep the reasoning level in their line or default. Pick any other subagent's level per the Subagents section of the **ferret-mode** skill.
 4. Give each candidate its own output location, per the **separate-before-serializing-shared-state** principle skill. For anything in a git repo, that is `isolation: "worktree"`, and the candidate commits on its own branch (t3.md, Worktrees). Otherwise it is `/tmp/arena-<slug>/candidate-<n>/` with `isolation: "shared"`.
 
 ## Phase B: Fan out
 
-Spawn all N subagents in one message: N `delegate_task` calls with `mode: "async"`, `role: "design"` (or `"implementation"` for code), and a `title` of `arena <slug>: candidate <n>`. Each `task` opens with `Read <poteto-mode>/worker.md before anything else.`, then gives the task, the path to the shared grounding, its own output location, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected. A worktree candidate also reports its worktree path, branch, and commit SHA. Do not poll. Each completion wakes you, and Phase C starts on the last one.
+Spawn all N subagents in one message: N `delegate_task` calls with `mode: "async"`, `role: "design"` (or `"implementation"` for code), and a `title` of `arena <slug>: candidate <n>`. Each `task` opens with `Read <ferret-mode>/worker.md before anything else.`, then gives the task, the path to the shared grounding, its own output location, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected. A worktree candidate also reports its worktree path, branch, and commit SHA. Do not poll. Each completion wakes you, and Phase C starts on the last one.
 
 If a candidate produces no output, proceed with N-1 and note the dropout.
 
