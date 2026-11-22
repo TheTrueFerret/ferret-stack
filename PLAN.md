@@ -1,6 +1,6 @@
 # Ferret Stack plan (draft, edit anything)
 
-Status: **approved 2026-11-22 with the recommended picks. Phase 1 in progress.** Change, cross out, or add anything you
+Status: **approved 2026-11-22 with the recommended picks. Phases 1 and 2 done (commits 4ba4fa5, 2fe4996, 9ef9996). Phase 3 next.** Change, cross out, or add anything you
 like. Answer the decisions in section 4 (write your pick after "Your pick:").
 When you say go, I build only what this file says, one phase at a time, and
 show you each phase before starting the next.
