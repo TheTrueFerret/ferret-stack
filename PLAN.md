@@ -107,7 +107,7 @@ Your pick: a) Hand off to tstack (approved). **Changed 2026-11-22:** keep pstack
 | Panels (arena, interrogate) | Claude Fable 5.2 + GPT-6 Luna (Codex) + Gemini 4 Neon |
 | Checking results | Claude Opus 5.5, high |
 
-Your changes: none, so use the table as is (approved)
+Your changes: none, so use the table as is (approved). **Changed 2026-11-23 at your request:** judgment, writing, and checking results run on Gemini 4 Neon, and the panels seat Claude Opus 5.5 instead of Fable 5.2.
 
 **D7. How to install?**
 - a) **Symlinks from the repo into `~/.claude/skills` and `~/.codex/skills`

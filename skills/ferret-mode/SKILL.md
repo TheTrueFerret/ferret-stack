@@ -99,12 +99,13 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **Start every subagent you spawn directly inside a playbook step as a `ferret-agent`.** In T3 that is a `delegate_task` whose `task` opens with the two `ferret-agent` lines in t3.md (worker.md, then this file and t3.md in full). The chat that receives `/ferret-mode` runs the playbook itself. Routed workflow skills (`arena`, `interrogate`, `swarm`) set their own brief. Respect it.
 
-**Defaults for every `delegate_task` call.** `mode: "async"`, a `title`, a `role`, a fresh `clientRequestId`, file pointers not inlined context, and an explicit `target` per role, worktree children included. Call `orchestrator_capabilities` once per thread before the first one. `/setup-ferret-stack` writes `~/.config/ferret-stack/models.md`, whose per-role lines override the defaults below and the role models in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default. A line of `inherit-parent` or `auto` runs the role on the parent model, so omit `target`. Each code playbook reads its own line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), prose and judgment read `judgment and prose`, trivial mechanical edits read `mechanical edits`, and verification reads `swarm workers`. If the file has no `# defaults: t3-1` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-ferret-stack`.
+**Defaults for every `delegate_task` call.** `mode: "async"`, a `title`, a `role`, a fresh `clientRequestId`, file pointers not inlined context, and an explicit `target` per role, worktree children included. Call `orchestrator_capabilities` once per thread before the first one. `/setup-ferret-stack` writes `~/.config/ferret-stack/models.md`, whose per-role lines override the defaults below and the role models in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default. A line of `inherit-parent` or `auto` runs the role on the parent model, so omit `target`. Each code playbook reads its own line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), prose and judgment read `judgment and prose`, trivial mechanical edits read `mechanical edits`, and verification reads `swarm workers`. If the file has no `# defaults: t3-2` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-ferret-stack`.
 
-- Code, prose, and judgment: `claudeAgent/claude-opus-5-5 effort=xhigh`.
+- Code: `claudeAgent/claude-opus-5-5 effort=xhigh`.
+- Prose and judgment: `antigravity/gemini-4-neon thought_level=xhigh`.
 - Trivial mechanical edits: `claudeAgent/claude-sonnet-5-5 effort=medium`.
-- Verification and swarm workers: `claudeAgent/claude-opus-5-5 effort=high`.
-- Diverse review and design panels: one runner each on `claudeAgent/claude-fable-5-2 effort=high`, `codex/gpt-6-luna reasoningEffort=high`, and `antigravity/gemini-4-neon thought_level=xhigh`.
+- Verification and swarm workers: `antigravity/gemini-4-neon thought_level=high`.
+- Diverse review and design panels: one runner each on `claudeAgent/claude-opus-5-5 effort=high`, `codex/gpt-6-luna reasoningEffort=high`, and `antigravity/gemini-4-neon thought_level=xhigh`.
 
 **Fable 5.2 is an exception.** It runs outside a panel only when the user named it for this task or two Opus 5.5 xhigh runs of the same brief failed its check. Say which. Difficulty alone never qualifies.
 
