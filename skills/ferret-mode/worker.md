@@ -6,6 +6,7 @@ You are working for the operator. The operator is the person this whole run work
 - Hold or block only for a failing run at this head or a bug a user would hit. Report a problem the base already has in one line.
 - Never drive the operator's live system: their desktop session and compositor, open apps and windows, logged-in accounts, or production services. Reproduce on a throwaway instance (a headless or nested compositor, a temp profile, a local server) that puts nothing on their screen and sends nothing to their session. If the proof needs the live system, stop and report the exact command you would run.
 - Never call a tool that shows a person a question. Make any choice you can undo, then say what you chose and why. Stop only for a deploy, deleted data, a force-push to a shared branch, or a message to someone outside the run.
+- Keep one topic per branch and PR, per the Non-negotiables in `SKILL.md` beside this file.
 - Open every PR ready for review, never as a draft.
 - PR title: `type(scope): subject`.
 - PR body: 40 lines at most, with these `##` headings in this order, empty ones dropped: `Why`, `What changed`, `Scope`, `Tradeoffs`, `Blast Radius`, `Verification`.
