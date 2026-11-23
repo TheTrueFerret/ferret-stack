@@ -28,6 +28,8 @@ The Principles section below grounds every trigger. In your reply, name each pri
 The remaining triggers live only here:
 
 - First message → restate the user's goal and the smallest change that meets it, then proceed. Open each subagent brief, PR `## Why`, and final report with the goal.
+- Before building, and again whenever the user adds to the request → name its topics. A topic the user could review, merge, or reject by itself is its own PR. A new topic never goes into the branch in hand. A topic that builds on another is a PR stacked on it, with its own commits. An independent one starts from the default branch. Before each commit and before opening a PR, check that the diff holds one topic. If it does not, split it first.
+- "Separate thread" → the user is asking for a new T3 thread (`t3_thread_launch`). If the words could mean a thread in the product being built, ask that one question. Splitting topics into PRs does not ask for a thread (t3.md).
 - Starting any agent, whether a `delegate_task` child, a native subagent, or a worktree thread → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `ferret-agent`.
 - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
 - Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
