@@ -26,7 +26,7 @@ Two steps:
 
 New here? The [guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs. Stuck, or unsure which skill fits? Ask [`/ferret-help`](./skills/ferret-help/SKILL.md).
 
-The other skills are situational, and the mode skill uses them for you as needed. Out of the box, code, prose, and judgment go to Claude Opus 5.5 at xhigh, mechanical edits to Claude Sonnet 5.5, and verification to Opus 5.5 at high. No role runs above xhigh. The review and design panels are Claude Fable 5.2, GPT-6 Luna on Codex, and Gemini 4 Neon on Antigravity. Outside a panel, Fable 5.2 runs only when you name it or after two Opus 5.5 runs of the same brief fail. [`/setup-ferret-stack`](./skills/setup-ferret-stack/SKILL.md) changes any of it.
+The other skills are situational, and the mode skill uses them for you as needed. Out of the box, code goes to Claude Opus 5.5 at xhigh, prose and judgment to Gemini 4 Neon at xhigh, mechanical edits to Claude Sonnet 5.5, and verification to Gemini 4 Neon at high. No role runs above xhigh. The review and design panels are Claude Opus 5.5, GPT-6 Luna on Codex, and Gemini 4 Neon on Antigravity. No role uses Fable 5.2 by default. Outside a panel, it runs only when you name it or after two Opus 5.5 runs of the same brief fail. [`/setup-ferret-stack`](./skills/setup-ferret-stack/SKILL.md) changes any of it.
 
 ## how it uses T3
 

@@ -17,6 +17,11 @@ Call `orchestrator_capabilities` (a `t3-code` MCP tool, which may need loading f
 
 The default role-to-model mapping is the file shape shown in step 5 below. If `~/.config/ferret-stack/models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5 is from a retired role. Drop it, and tell the user.
 
+A file marked `# defaults: t3-1` may still hold defaults that have since changed. In such a file, replace a role's value with the step 5 default when it matches the old default below in model or list, whatever its effort, and tell the user which roles you replaced. Every other value is a choice, so keep it.
+
+- `judgment and prose` and `swarm workers`: `claudeAgent/claude-opus-5-5`
+- `arena runners` and `interrogate reviewers`: `claudeAgent/claude-fable-5-2`, `codex/gpt-6-luna`, `antigravity/gemini-4-neon`
+
 ### 3. Budget, map, and confirm
 
 **(a) Ask for a budget.** Prefer `AskUserQuestion` over free text. Offer these three options with these exact labels, and name the current budget when the file records one. With no file, say that `large` matches the skill defaults.
@@ -27,7 +32,7 @@ The default role-to-model mapping is the file shape shown in step 5 below. If `~
 
 **(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by family, list, or alias (`inherit-parent`, `auto`). Families are the ones Phase A of the **arena** skill defines, so Fable is its own family. Each role has a target effort, which is its default's effort moved by the budget. `large` keeps it, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `xhigh` > `high` > `medium` > `low`. No role runs above `xhigh`, and a target at the bottom of the ladder stays there. Set the effort value of every real target in the role, panel entries included, to the role's target effort, using that model's own option id. If the model does not allow that value, use its highest allowed value at or below the target, else mark the role as needing a choice. `inherit-parent` and `auto` do not change. So `medium` turns `claudeAgent/claude-opus-5-5 effort=xhigh` into `effort=high`, and `antigravity/gemini-4-neon thought_level=xhigh` into `thought_level=high`. Fast mode is never written unless the user asks for it.
 
-**(c) Show the roles and confirm.** Show every role with its model, marking any target not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models at `xhigh` or below plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer `AskUserQuestion` over free text. For panel roles (arena runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. A panel should mix vendors, so name the vendor of each entry (t3.md, Models). `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values from a vendor other than the parent's, in list order, so order it by preference. Fable and the other Claude models are one vendor. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for every worker and for verification, unless a race or comparison assigns another model per arm.
+**(c) Show the roles and confirm.** Show every role with its model, marking any target not in the detected set as needing a choice. Also list each line step 2 dropped or replaced. Ask whether to accept as-is or change specific roles, offering the detected models at `xhigh` or below plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer `AskUserQuestion` over free text. For panel roles (arena runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. A panel should mix vendors, so name the vendor of each entry (t3.md, Models). `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values from a vendor other than the parent's, in list order, so order it by preference. Fable and the other Claude models are one vendor. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for every worker and for verification, unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
 
@@ -35,24 +40,24 @@ Every real target written must be in the detected set, on an enabled provider, w
 
 ### 5. Write the file
 
-Create `~/.config/ferret-stack/` if needed, and write `models.md` with the comment lines, the `# defaults: t3-1` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels ferret-mode uses. Overwrite the whole file so re-runs stay idempotent. Shape:
+Create `~/.config/ferret-stack/` if needed, and write `models.md` with the comment lines, the `# defaults: t3-2` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels ferret-mode uses. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
 # Ferret Stack model configuration for T3 Code. One line per role. Delete a line to fall back to the skill default.
 # A value is <providerInstanceId>/<model id> <option id>=<value>, or a comma-separated list of them.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit `target` in delegate_task). Alias entries in a panel list still count toward its fan-out.
-# defaults: t3-1
+# defaults: t3-2
 # budget: large (xhigh)
 feature, refactoring: claudeAgent/claude-opus-5-5 effort=xhigh
 bug-fix: claudeAgent/claude-opus-5-5 effort=xhigh
 perf-issue: claudeAgent/claude-opus-5-5 effort=xhigh
 hillclimb: claudeAgent/claude-opus-5-5 effort=xhigh
-judgment and prose: claudeAgent/claude-opus-5-5 effort=xhigh
+judgment and prose: antigravity/gemini-4-neon thought_level=xhigh
 mechanical edits: claudeAgent/claude-sonnet-5-5 effort=medium
-arena runners: claudeAgent/claude-fable-5-2 effort=high, codex/gpt-6-luna reasoningEffort=high, antigravity/gemini-4-neon thought_level=xhigh
+arena runners: claudeAgent/claude-opus-5-5 effort=high, codex/gpt-6-luna reasoningEffort=high, antigravity/gemini-4-neon thought_level=xhigh
 arena cross-judge pool: codex/gpt-6-luna reasoningEffort=high, antigravity/gemini-4-neon thought_level=xhigh, claudeAgent/claude-opus-5-5 effort=high
-swarm workers: claudeAgent/claude-opus-5-5 effort=high
-interrogate reviewers: claudeAgent/claude-fable-5-2 effort=high, codex/gpt-6-luna reasoningEffort=high, antigravity/gemini-4-neon thought_level=xhigh
+swarm workers: antigravity/gemini-4-neon thought_level=high
+interrogate reviewers: claudeAgent/claude-opus-5-5 effort=high, codex/gpt-6-luna reasoningEffort=high, antigravity/gemini-4-neon thought_level=xhigh
 ```
 
 ### 6. Confirm
